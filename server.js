@@ -21,7 +21,7 @@ app.post("/users", async (req, res) => {
     res.status(500).send("unsucessful creating user");
   }
 });
-// route for login
+// route for login. Check whether user can be authenticated
 app.post("/users/login", async (req, res) => {
   const user = users.find((user) => user.name === req.body.name);
   if (user == null) {
