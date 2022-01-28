@@ -21,5 +21,22 @@ app.post("/users", async (req, res) => {
     res.status(500).send("unsucessful creating user");
   }
 });
+// route for login
+app.post("/users/login", async (req, res) => {
+  const user = users.find((user) => user.name === req.body.name);
+  if (user == null) {
+    return res.status(400).send("User not found");
+  }
+  //bcrypt used to compare the saved password with the send password
+  try {
+    if (await bcrypt.compare(req.body.password, user.password)) {
+      res.send("Authentication successfull");
+    } else {
+      res.send("Authentication unsuccessful");
+    }
+  } catch {
+    res.status(500).send();
+  }
+});
 
 app.listen(3000);
